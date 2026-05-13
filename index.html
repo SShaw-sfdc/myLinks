@@ -104,11 +104,11 @@
 
     .endorsement-item {
       flex: 0 0 auto;
-      width: 300px;
+      width: min(300px, calc(100vw - 9.5rem));
     }
 
     .endorsement-item iframe {
-      width: 300px;
+      width: 100%;
       height: 170px;
       border-radius: 12px;
       border: 0;
@@ -131,8 +131,8 @@
 
     .carousel-btn {
       flex: 0 0 auto;
-      width: 34px;
-      height: 34px;
+      width: 40px;
+      height: 40px;
       border-radius: 999px;
       border: 1px solid var(--border);
       background: rgba(255, 255, 255, 0.03);
@@ -186,6 +186,49 @@
       outline: 2px solid var(--grad-end);
       outline-offset: 2px;
     }
+
+    @media (max-width: 560px) {
+      body {
+        padding: 0.9rem;
+      }
+
+      .card {
+        border-radius: 16px;
+        padding: 1.2rem 0.85rem 0.95rem;
+      }
+
+      .avatar {
+        width: 82px;
+        height: 82px;
+      }
+
+      h1 {
+        font-size: 1.35rem;
+      }
+
+      .bio {
+        font-size: 0.94rem;
+        margin-bottom: 1.2rem;
+      }
+
+      .endorsements {
+        margin-bottom: 1.2rem;
+      }
+
+      .endorsement-row {
+        gap: 0.35rem;
+      }
+
+      .carousel-btn {
+        width: 36px;
+        height: 36px;
+      }
+
+      .link-btn {
+        min-height: 46px;
+        padding: 0.88rem 1rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -230,7 +273,13 @@
     const endorsementScroll = document.getElementById("endorsement-scroll");
     const prevBtn = document.getElementById("endorsements-prev");
     const nextBtn = document.getElementById("endorsements-next");
-    const scrollStep = 315;
+    const getScrollStep = () => {
+      const firstItem = endorsementScroll.querySelector(".endorsement-item");
+      if (!firstItem) return 315;
+      const styles = window.getComputedStyle(endorsementScroll);
+      const gap = Number.parseFloat(styles.columnGap || styles.gap || "15") || 15;
+      return firstItem.getBoundingClientRect().width + gap;
+    };
 
     const getMaxScrollLeft = () => endorsementScroll.scrollWidth - endorsementScroll.clientWidth;
 
@@ -240,7 +289,7 @@
         endorsementScroll.scrollTo({ left: maxScrollLeft, behavior: "smooth" });
         return;
       }
-      endorsementScroll.scrollBy({ left: -scrollStep, behavior: "smooth" });
+      endorsementScroll.scrollBy({ left: -getScrollStep(), behavior: "smooth" });
     });
 
     nextBtn.addEventListener("click", () => {
@@ -249,7 +298,7 @@
         endorsementScroll.scrollTo({ left: 0, behavior: "smooth" });
         return;
       }
-      endorsementScroll.scrollBy({ left: scrollStep, behavior: "smooth" });
+      endorsementScroll.scrollBy({ left: getScrollStep(), behavior: "smooth" });
     });
   </script>
 </body>
