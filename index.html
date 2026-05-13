@@ -219,7 +219,7 @@
     </section>
 
     <section class="links" aria-label="Social links">
-      <a class="link-btn" href="https://twitter.com/" target="_blank" rel="noopener noreferrer">Twitter</a>
+      <a class="link-btn" href="https://www.salesforce.com/trailblazer/shaw" target="_blank" rel="noopener noreferrer">My Trailhead</a>
       <a class="link-btn" href="https://www.linkedin.com/in/swshaw/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       <a class="link-btn" href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a>
       <a class="link-btn" href="mailto:stephanieshaw333@gmail.com">Email</a>
@@ -229,13 +229,26 @@
     const endorsementScroll = document.getElementById("endorsement-scroll");
     const prevBtn = document.getElementById("endorsements-prev");
     const nextBtn = document.getElementById("endorsements-next");
+    const scrollStep = 315;
+
+    const getMaxScrollLeft = () => endorsementScroll.scrollWidth - endorsementScroll.clientWidth;
 
     prevBtn.addEventListener("click", () => {
-      endorsementScroll.scrollBy({ left: -300, behavior: "smooth" });
+      const maxScrollLeft = getMaxScrollLeft();
+      if (endorsementScroll.scrollLeft <= 5) {
+        endorsementScroll.scrollTo({ left: maxScrollLeft, behavior: "smooth" });
+        return;
+      }
+      endorsementScroll.scrollBy({ left: -scrollStep, behavior: "smooth" });
     });
 
     nextBtn.addEventListener("click", () => {
-      endorsementScroll.scrollBy({ left: 300, behavior: "smooth" });
+      const maxScrollLeft = getMaxScrollLeft();
+      if (endorsementScroll.scrollLeft >= maxScrollLeft - 5) {
+        endorsementScroll.scrollTo({ left: 0, behavior: "smooth" });
+        return;
+      }
+      endorsementScroll.scrollBy({ left: scrollStep, behavior: "smooth" });
     });
   </script>
 </body>
