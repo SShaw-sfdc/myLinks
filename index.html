@@ -51,15 +51,15 @@
       margin: 0 auto 1rem;
       border-radius: 50%;
       border: 2px solid rgba(255, 255, 255, 0.2);
-      background:
-        linear-gradient(135deg, rgba(124, 92, 255, 0.35), rgba(0, 212, 255, 0.35)),
-        rgba(255, 255, 255, 0.05);
-      display: grid;
-      place-items: center;
-      color: rgba(255, 255, 255, 0.9);
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     h1 {
@@ -74,6 +74,84 @@
       line-height: 1.5;
       max-width: 32ch;
       margin: 0 auto 1.5rem;
+    }
+
+    .endorsements {
+      text-align: left;
+      margin: 0 0 1.5rem;
+    }
+
+    .endorsements h3 {
+      font-size: 1rem;
+      margin-bottom: 0.8rem;
+      color: var(--text);
+      letter-spacing: 0.01em;
+    }
+
+    .endorsement-scroll {
+      overflow-x: auto;
+      display: flex;
+      gap: 15px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 0.25rem;
+      scroll-behavior: smooth;
+    }
+
+    .endorsement-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .endorsement-item {
+      flex: 0 0 auto;
+      width: 300px;
+    }
+
+    .endorsement-item iframe {
+      width: 300px;
+      height: 170px;
+      border-radius: 12px;
+      border: 0;
+      display: block;
+      background: #000;
+    }
+
+    .endorsement-item p {
+      margin-top: 0.4rem;
+      color: var(--muted);
+      font-size: 0.86rem;
+      text-align: center;
+    }
+
+    .endorsement-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .carousel-btn {
+      flex: 0 0 auto;
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 1.05rem;
+      line-height: 1;
+      transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+    }
+
+    .carousel-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .carousel-btn:focus-visible {
+      outline: 2px solid var(--grad-end);
+      outline-offset: 2px;
     }
 
     .links {
@@ -112,16 +190,53 @@
 </head>
 <body>
   <main class="card">
-    <div class="avatar" aria-label="Profile picture placeholder">Photo</div>
-    <h1>Your Name</h1>
-    <p class="bio">Short bio goes here. Share what you do and what people can expect when they connect with you.</p>
+    <div class="avatar">
+      <img src="ShawFace.jpg" alt="Portrait of Stephanie Shaw" />
+    </div>
+    <h1>Stephanie Shaw</h1>
+    <p class="bio">I turn big AI ideas into useful, people-first experiences. I’m a Salesforce Technical Architect who loves connecting strategy, storytelling, and hands-on building so data and agentic AI actually help teams move faster and smarter.</p>
+
+    <section class="endorsements" aria-label="Teammate endorsements">
+      <h3>Teammate Endorsements</h3>
+      <div class="endorsement-row">
+        <button class="carousel-btn" id="endorsements-prev" type="button" aria-label="Previous endorsements">&lt;</button>
+        <div class="endorsement-scroll" id="endorsement-scroll">
+          <div class="endorsement-item">
+            <iframe src="https://www.youtube-nocookie.com/embed/hFu0ubhyX44" title="Teammate endorsement from Bill Reich" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <p>Bill Reich</p>
+          </div>
+          <div class="endorsement-item">
+            <iframe src="https://www.youtube-nocookie.com/embed/idy52R_6poA" title="Teammate endorsement from Hunter Reh" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <p>Hunter Reh</p>
+          </div>
+          <div class="endorsement-item">
+            <iframe src="https://www.youtube-nocookie.com/embed/IGWsGzT5f6A" title="Teammate endorsement from Miranda Dafoe" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <p>Miranda Dafoe</p>
+          </div>
+        </div>
+        <button class="carousel-btn" id="endorsements-next" type="button" aria-label="Next endorsements">&gt;</button>
+      </div>
+    </section>
 
     <section class="links" aria-label="Social links">
       <a class="link-btn" href="https://twitter.com/" target="_blank" rel="noopener noreferrer">Twitter</a>
-      <a class="link-btn" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a class="link-btn" href="https://www.linkedin.com/in/swshaw/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       <a class="link-btn" href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a>
-      <a class="link-btn" href="mailto:you@example.com">Email</a>
+      <a class="link-btn" href="mailto:stephanieshaw333@gmail.com">Email</a>
     </section>
   </main>
+  <script>
+    const endorsementScroll = document.getElementById("endorsement-scroll");
+    const prevBtn = document.getElementById("endorsements-prev");
+    const nextBtn = document.getElementById("endorsements-next");
+
+    prevBtn.addEventListener("click", () => {
+      endorsementScroll.scrollBy({ left: -300, behavior: "smooth" });
+    });
+
+    nextBtn.addEventListener("click", () => {
+      endorsementScroll.scrollBy({ left: 300, behavior: "smooth" });
+    });
+  </script>
 </body>
 </html>
